@@ -55,5 +55,5 @@ This repository is distributed under the [MIT License](LICENSE). Note that `User
 
 If you use this code or the associated dataset, please cite:
 
-- **Manuscript:** Mahdigholi, F. *Fault Diagnosis of the 15 MW Floating Offshore Wind Turbine: A Simulation-Based Dataset and Hybrid Deep Learning Approach.* Manuscript submitted for publication. Citation details will be added upon publication.
+- **Manuscript:** Mahdigholi, F. *OpenFAST Simulation-Based Dataset for Multi-Fault Diagnosis of a 15 MW Floating Offshore Wind Turbine under Variable Operating Conditions* Manuscript submitted for publication. Citation details will be added upon publication.
 - **Dataset:** Mahdigholi, F. *OpenFAST Simulation-Based Dataset for Multi-Fault Diagnosis of a 15 MW Floating Offshore Wind Turbine under Variable Operating Conditions* [dataset]. Zenodo, v1.0, 2026. https://doi.org/10.5281/zenodo.22017961
