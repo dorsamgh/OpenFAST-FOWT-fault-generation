@@ -42,14 +42,15 @@ The value `t = 400 s` was chosen as the fault inception time across the entire d
 
 ## Severity levels
 
-Two severity levels are included in the primary 10-class benchmark, differing only in the numeric value of `<amplitude>` hardcoded in the `IF` block:
+Three separate variants of this subroutine were created, differing only in the numeric value of `<amplitude>` hardcoded in the `IF` block:
 
 | Severity level | Relative amplitude ($A$) | `<amplitude>` value in code | Description |
 | :--- | :--- | :--- | :--- |
+| Low | 1% | `0.01` | Mild periodic tension modulation at the fairlead |
 | Moderate | 5% | `0.05` | Moderate periodic tension modulation at the fairlead |
 | High | 10% | `0.10` | Severe periodic tension modulation at the fairlead |
 
-Each severity level required its own separately compiled version of OpenFAST, since the amplitude value is hardcoded directly into the Fortran source rather than read from an input file at runtime. Both versions are otherwise identical to each other and to the baseline source, differing only in this single numeric literal.
+Each severity level required its own separately compiled version of OpenFAST, since the amplitude value is hardcoded directly into the Fortran source rather than read from an input file at runtime. All three versions are otherwise identical to each other and to the baseline source, differing only in this single numeric literal.
 
 ## Isolation of the fault
 
@@ -58,5 +59,5 @@ All other mooring lines, and all aerodynamic, hydrodynamic, and control subsyste
 ## Files in this folder
 
 | File | Description |
-| :--- | :--- |
-| `MoorDyn_Line.f90` | Modified MoorDyn source file (representative severity level: 5% amplitude) |
+|---|---|
+| `MoorDyn_Line.f90` | Modified MoorDyn source file (representative severity level: 1% amplitude) |
