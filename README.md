@@ -1,6 +1,6 @@
 # OpenFAST Fault Generation for a 15 MW Floating Offshore Wind Turbine
 
-This repository documents how a set of realistic actuator and mooring faults were generated for a 15 MW floating offshore wind turbine using OpenFAST. It accompanies a fault diagnosis dataset built for deep-learning-based condition monitoring research.
+This repository documents how a set of actuator and mooring faults were generated for a 15 MW floating offshore wind turbine using OpenFAST. It accompanies a fault diagnosis dataset built for deep-learning-based condition monitoring research.
 
 ## Reference system
 
@@ -15,8 +15,8 @@ Four distinct fault types were implemented, spanning the turbine's actuation and
 | Fault | Full name | Affected subsystem | Implementation | Severity levels |
 |---|---|---|---|---|
 | **NYL** | Nacelle Yaw Lock | ServoDyn (yaw control) | Source code modification (`UserSubs.f90`) | 0.2°, 0.5°, 1.0° |
-| **AD** | Anchor Displacement | MoorDyn (mooring line 1) | Source code modification (`MoorDyn_Line.f90`) | 0.2 m, 0.5 m, 1.0 m |
-| **OPB** | Fairlead Out-of-Plane Bending | MoorDyn (mooring line 1, fairlead end) | Source code modification (`MoorDyn_Line.f90`) | 1%, 5%, 10% (relative tension oscillation amplitude) |
+| **LLS** | Line Length Slackening | MoorDyn (mooring line 1) | Source code modification (`MoorDyn_Line.f90`) | 0.2 m, 0.5 m, 1.0 m |
+| **PTD** | Prescribed Periodic Tension Disturbance | MoorDyn (mooring line 1, fairlead end) | Source code modification (`MoorDyn_Line.f90`) | 1%, 5%, 10% (relative tension oscillation amplitude) |
 | **BPL** | Blade Pitch Lock | ServoDyn (blade 1 pitch control) | Input file configuration only, no source code change | Single configuration (not graded) |
 
 All faults are triggered at simulation time **t = 400 s**, after the turbine has reached steady-state operation, and each is implemented in isolation so its individual signature can be cleanly observed in the resulting dataset.
@@ -24,11 +24,11 @@ All faults are triggered at simulation time **t = 400 s**, after the turbine has
 ## What each fault represents
 
 - **NYL** simulates a seized yaw drive/brake. From t = 400 s, the nacelle is commanded to a fixed yaw offset and no longer tracks wind direction changes.
-- **AD** simulates a mooring anchor slipping on the seabed. From t = 400 s, the unstretched length of the segment nearest the anchor on line 1 is permanently increased, altering the line's catenary geometry and effective stiffness.
-- **OPB** simulates chain-link locking at the fairlead. From t = 400 s, the tension and internal damping force at the fairlead-end segment of line 1 are modulated by a sinusoidal factor centered on the original pretension, reproducing the periodic tension fluctuation characteristic of this phenomenon.
+- **LLS** simulates a permanent geometric slackening of mooring line 1, serving as a controlled proxy for early anchor drag, seabed settlement, or gradual chain elongation. From t = 400 s, the unstretched length of the anchor-adjacent segment on line 1 is permanently increased, reducing pretension and altering the line's catenary geometry and effective stiffness.
+- **PTD** implements a controlled periodic tension anomaly at the fairlead of mooring line 1. From t = 400 s, the axial tension and internal damping force vectors at the fairlead-end segment of line 1 are modulated by a sinusoidal factor ($\omega = 0.1\text{ rad/s}$) centered on the original pretension, introducing localized oscillatory fluctuations without shifting the mean load.
 - **BPL** simulates a frozen pitch actuator. From t = 400 s, blade 1 stops tracking pitch control commands and holds at the exact angle it had at that instant, while blades 2 and 3 continue under standard control.
 
-Each fault has its own folder in this repository (NYL, AD, OPB, BPL), containing the modified source or input file along with a dedicated README that gives the full technical description: the exact code change, the physical reasoning behind it, and the severity level parameterization.
+Each fault has its own folder in this repository (`NYL`, `LLS`, `PTD`, `BPL`), containing the modified source or input file along with a dedicated README that gives the full technical description: the exact code change, the physical reasoning behind it, and the severity level parameterization.
 
 ## Base source
 
@@ -55,5 +55,5 @@ This repository is distributed under the [MIT License](LICENSE). Note that `User
 
 If you use this code or the associated dataset, please cite:
 
-- **Manuscript:** Mahdigholi, F. *A Physics-Based Fault Benchmark for the 15 MW Floating Offshore Wind Turbine: Dataset Generation and Cross-Domain Fault Diagnosis* Manuscript submitted for publication. Citation details will be added upon publication.
+- **Manuscript:** Mahdigholi, F., Aliyari-Shoorehdeli, M., & Yousefi, I. *A Physics-Based Fault Benchmark for the 15 MW Floating Offshore Wind Turbine: Dataset Generation and Cross-Domain Fault Diagnosis* Manuscript submitted for publication. Citation details will be added upon publication.
 - **Dataset:** Mahdigholi, F. *OpenFAST Simulation-Based Dataset for Multi-Fault Diagnosis of a 15 MW Floating Offshore Wind Turbine under Variable Operating Conditions* [dataset]. Zenodo, v1.0, 2026. https://doi.org/10.5281/zenodo.22017961
